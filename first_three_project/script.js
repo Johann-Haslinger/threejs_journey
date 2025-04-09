@@ -46,7 +46,21 @@ const scene = new THREE.Scene();
 
 const canvas = document.querySelector("canvas.webgl");
 
-const mesh = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: "red" }));
+const geometry = new THREE.BufferGeometry();
+
+const count = 50;
+const positionsArray = new Float32Array(count * 3 * 3);
+
+for (let i = 0; i < count * 3 * 3; i++) {
+  positionsArray[i] = Math.random() - 0.5;
+}
+
+const positionAttribute = new THREE.BufferAttribute(positionsArray, 3);
+geometry.setAttribute("position", positionAttribute);
+
+// const geometry = new THREE.BoxGeometry(1, 1, 1, 6);
+const material = new THREE.MeshBasicMaterial({ color: "red", wireframe: true });
+const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
 
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
